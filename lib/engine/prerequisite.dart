@@ -1,5 +1,7 @@
 import 'game_state.dart';
 
+const _npc = 'npc';
+
 abstract class Prerequisite {
   bool isMet(GameState state);
 
@@ -18,6 +20,9 @@ abstract class Prerequisite {
     }
     if (json.containsKey('not')) {
       return NotPrerequisite.fromJson(json);
+    }
+    if (json.containsKey(_npc)) {
+      return NpcPrerequisite.fromJson(json);
     }
     // A prerequisite that is always met.
     return AllOfPrerequisite(prerequisites: []);
@@ -133,5 +138,42 @@ class HasFlagPrerequisite implements Prerequisite {
 
   factory HasFlagPrerequisite.fromJson(Map<String, dynamic> json) {
     return HasFlagPrerequisite(flag: json['hasFlag']);
+  }
+}
+
+class NpcPrerequisite implements Prerequisite {
+  final String npcId;
+  final int? moodGreaterThan;
+  final int? moodLessThan;
+
+  NpcPrerequisite({
+    required this.npcId,
+    this.moodGreaterThan,
+    this.moodLessThan,
+  });
+
+  @override
+  bool isMet(GameState state) {
+    final npcState = state.npcStates[npcId];
+    if (npcState == null) {
+      return false;
+    }
+
+    if (moodGreaterThan != null && npcState.mood <= moodGreaterThan!) {
+      return false;
+    }
+    if (moodLessThan != null && npcState.mood >= moodLessThan!) {
+      return false;
+    }
+    return true;
+  }
+
+  factory NpcPrerequisite.fromJson(Map<String, dynamic> json) {
+    final data = json[_npc];
+    return NpcPrerequisite(
+      npcId: data['id'],
+      moodGreaterThan: data['moodGreaterThan'],
+      moodLessThan: data['moodLessThan'],
+    );
   }
 }

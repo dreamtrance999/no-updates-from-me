@@ -1,4 +1,5 @@
 import 'choice.dart';
+import 'event_line.dart';
 import 'prerequisite.dart';
 
 class Event {
@@ -7,7 +8,9 @@ class Event {
   final int baseWeight;
   final int cooldown;
   final Prerequisite prereq;
-  final List<String> text;
+  final bool oneTime;
+  final bool isFiller;
+  final List<EventLine> text;
   final List<Choice> choices;
 
   Event({
@@ -16,6 +19,8 @@ class Event {
     required this.baseWeight,
     required this.cooldown,
     required this.prereq,
+    required this.oneTime,
+    required this.isFiller,
     required this.text,
     required this.choices,
   });
@@ -24,13 +29,18 @@ class Event {
     final choices =
         (json['choices'] as List).map((j) => Choice.fromJson(j)).toList();
 
+    final text =
+        (json['text'] as List).map((j) => EventLine.fromJson(j)).toList();
+
     return Event(
       id: json['id'],
       channel: json['channel'],
       baseWeight: json['baseWeight'] ?? 10,
       cooldown: json['cooldown'] ?? 0,
       prereq: Prerequisite.fromJson(json['prereq'] ?? {}),
-      text: (json['text'] as List).map((e) => e as String).toList(),
+      oneTime: json['oneTime'] ?? false,
+      isFiller: json['isFiller'] ?? false,
+      text: text,
       choices: choices,
     );
   }

@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'npc_state.dart';
+
 class GameState {
   int time;
   int stress;
@@ -8,6 +10,7 @@ class GameState {
 
   final Set<String> flags;
   final Map<String, int> eventHistory;
+  final Map<String, NpcState> npcStates;
   final Random rng;
 
   GameState({
@@ -18,6 +21,11 @@ class GameState {
     int? seed,
   })  : flags = {},
         eventHistory = {},
+        npcStates = {
+          'olivia': NpcState(),
+          'pete': NpcState(),
+          'gan': NpcState(),
+        },
         rng = Random(seed);
 
   factory GameState.initial() => GameState(

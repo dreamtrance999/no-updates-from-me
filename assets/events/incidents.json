@@ -1,0 +1,66 @@
+[
+  {
+    "id": "production_outage",
+    "channel": "incidents",
+    "prereq": {
+      "allOf": [
+        {
+          "stat": "chaos",
+          "greaterThan": 50
+        }
+      ]
+    },
+    "text": [
+      "We have a major production outage. The site is down and customers are reporting errors."
+    ],
+    "choices": [
+      {
+        "id": "lead_investigation",
+        "label": "I'll lead the investigation.",
+        "timeCost": 120,
+        "outcomes": [
+          {
+            "weight": 50,
+            "messages": [
+              "After a stressful two hours, you manage to identify the root cause and restore the site. The team is exhausted, but relieved."
+            ],
+            "apply": [
+              {
+                "stat": "stress",
+                "increment": 20
+              },
+              {
+                "stat": "morale",
+                "increment": -10
+              },
+              {
+                "stat": "chaos",
+                "set": 10
+              }
+            ]
+          },
+          {
+            "weight": 50,
+            "messages": [
+              "The outage is worse than you thought. It takes the rest of the day to fix the issue. The team is demoralized and the customers are angry."
+            ],
+            "apply": [
+              {
+                "stat": "stress",
+                "increment": 30
+              },
+              {
+                "stat": "morale",
+                "increment": -20
+              },
+              {
+                "stat": "chaos",
+                "set": 20
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

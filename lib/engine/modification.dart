@@ -1,5 +1,7 @@
 import 'game_state.dart';
 
+const _npc = 'npc';
+
 abstract class Modification {
   void apply(GameState state);
 
@@ -13,7 +15,10 @@ abstract class Modification {
     if (json.containsKey('removeFlag')) {
       return RemoveFlagModification.fromJson(json);
     }
-    throw ArgumentError('Unknown modification type');
+    if (json.containsKey(_npc)) {
+      return NpcModification.fromJson(json);
+    }
+    throw ArgumentError('Unknown modification type: $json');
   }
 }
 
@@ -123,5 +128,32 @@ class RemoveFlagModification implements Modification {
 
   factory RemoveFlagModification.fromJson(Map<String, dynamic> json) {
     return RemoveFlagModification(flag: json['removeFlag']);
+  }
+}
+
+class NpcModification implements Modification {
+  final String npcId;
+  final int? moodIncrement;
+
+  NpcModification({required this.npcId, this.moodIncrement});
+
+  @override
+  void apply(GameState state) {
+    final npcState = state.npcStates[npcId];
+    if (npcState == null) {
+      return;
+    }
+
+    if (moodIncrement != null) {
+      npcState.mood += moodIncrement!;
+    }
+  }
+
+  factory NpcModification.fromJson(Map<String, dynamic> json) {
+    final data = json[_npc];
+    return NpcModification(
+      npcId: data['id'],
+      moodIncrement: data['mood'],
+    );
   }
 }

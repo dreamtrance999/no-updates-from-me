@@ -1,0 +1,69 @@
+[
+  {
+    "id": "pete_private_chat",
+    "channel": "dm_pete",
+    "oneTime": true,
+    "prereq": {
+      "allOf": [
+        {
+          "npc": {
+            "id": "pete",
+            "moodLessThan": 40
+          }
+        }
+      ]
+    },
+    "text": [
+      {
+        "actor": "pete",
+        "line": "Hey, got a minute?"
+      },
+      {
+        "actor": "pete",
+        "line": "I'm not happy with how that linter discussion went. I feel like my concerns weren't heard."
+      }
+    ],
+    "choices": [
+      {
+        "id": "apologize",
+        "label": "I'm sorry you feel that way, Pete. Let's talk.",
+        "timeCost": 15,
+        "outcomes": [
+          {
+            "messages": [
+              "Thanks. I appreciate you taking the time."
+            ],
+            "apply": [
+              {
+                "npc": {
+                  "id": "pete",
+                  "mood": 15
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "dismiss",
+        "label": "We made a decision. Let's move on.",
+        "timeCost": 5,
+        "outcomes": [
+          {
+            "messages": [
+              "Fine. Whatever."
+            ],
+            "apply": [
+              {
+                "npc": {
+                  "id": "pete",
+                  "mood": -10
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

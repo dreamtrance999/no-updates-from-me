@@ -59,9 +59,12 @@ class _GameScreenState extends State<GameScreen> {
               // slide from left
               width: 320,
               child: _DrawerPanel(
+                day: vm.day,
+                weekday: vm.weekday,
                 clockLabel: vm.clockLabel,
                 morale: vm.morale,
                 stress: vm.stress,
+                chaos: vm.chaos,
                 channels: vm.channels,
                 chats: vm.chats,
                 onChannelTap: (id) async {
@@ -110,13 +113,14 @@ class _MainChat extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                clockLabel,
+                'Day $day ($weekday) $clockLabel',
                 style: const TextStyle(fontSize: 16, color: Colors.white),
               ),
               const Spacer(),
-              Text(
-                "$weekday, Day $day",
-                style: const TextStyle(fontSize: 16, color: Colors.white),
+              IconButton(
+                onPressed: () =>
+                    context.read<GameScreenViewModel>().resetGame(),
+                icon: const Icon(Icons.refresh, color: Colors.white),
               ),
             ],
           ),
@@ -146,18 +150,24 @@ class _MainChat extends StatelessWidget {
 }
 
 class _DrawerPanel extends StatelessWidget {
+  final int day;
+  final String weekday;
   final String clockLabel;
   final int morale;
   final int stress;
+  final int chaos;
   final List<GameChannelUiModel> channels;
   final List<GameChannelUiModel> chats;
   final Future<void> Function(String channelId) onChannelTap;
   final VoidCallback onClose;
 
   const _DrawerPanel({
+    required this.day,
+    required this.weekday,
     required this.clockLabel,
     required this.morale,
     required this.stress,
+    required this.chaos,
     required this.channels,
     required this.chats,
     required this.onChannelTap,
@@ -176,7 +186,7 @@ class _DrawerPanel extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  clockLabel,
+                  'Day $day ($weekday) $clockLabel',
                   style: const TextStyle(color: Colors.white, fontSize: 16),
                 ),
                 const Spacer(),
@@ -187,10 +197,6 @@ class _DrawerPanel extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            Text("Morale: $morale",
-                style: const TextStyle(color: Colors.white54)),
-            Text("Stress: $stress",
-                style: const TextStyle(color: Colors.white54)),
             Expanded(
               child: ListView(
                 children: [
@@ -208,7 +214,11 @@ class _DrawerPanel extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 8),
+            Text(
+              "Morale: $morale   Stress: $stress   Chaos: $chaos",
+              style: const TextStyle(color: Colors.white54),
+            ),
           ],
         ),
       ),
@@ -293,11 +303,13 @@ class _MessageBubble extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (m.avatarAssetPath != null)
+          if (m.actor.name != '[SYSTEM]')
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: CircleAvatar(
-                  radius: 16, backgroundImage: AssetImage(m.avatarAssetPath!)),
+                radius: 16,
+                child: Text(m.actor.name.isNotEmpty ? m.actor.name[0] : ''),
+              ),
             ),
           Expanded(
             child: Column(
@@ -307,7 +319,7 @@ class _MessageBubble extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        m.name,
+                        m.actor.name,
                         style: const TextStyle(color: Colors.white70),
                         overflow: TextOverflow.ellipsis,
                       ),

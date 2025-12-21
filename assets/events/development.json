@@ -1,43 +1,42 @@
 [
   {
-    "id": "dev_conflict",
+    "id": "first_day_intro",
     "channel": "development",
-    "baseWeight": 10,
-    "cooldown": 60,
+    "oneTime": true,
+    "prereq": {
+      "allOf": [
+        {
+          "stat": "time",
+          "lessThan": 541
+        }
+      ]
+    },
     "text": [
-      "Two devs are arguing in chat."
+      {
+        "actor": "olivia",
+        "line": "Welcome to the team! I'm Olivia, one of the senior engineers. Looking forward to working with you."
+      },
+      {
+        "actor": "olivia",
+        "line": "Feel free to ask if you need anything."
+      }
     ],
     "choices": [
       {
-        "id": "mediate",
-        "label": "Mediate",
-        "timeCost": 15,
+        "id": "thanks",
+        "label": "Thanks, Olivia! That means a lot.",
+        "timeCost": 5,
         "outcomes": [
           {
-            "weight": 70,
             "messages": [
-              "They calm down."
+              "You got it."
             ],
             "apply": [
               {
-                "stat": "stress",
-                "increment": -5
-              }
-            ]
-          },
-          {
-            "weight": 30,
-            "messages": [
-              "They argue in DMs instead."
-            ],
-            "apply": [
-              {
-                "stat": "stress",
-                "increment": 5
-              },
-              {
-                "stat": "chaos",
-                "increment": 3
+                "npc": {
+                  "id": "olivia",
+                  "mood": 5
+                }
               }
             ]
           }
@@ -46,40 +45,154 @@
     ]
   },
   {
-    "id": "server_down",
+    "id": "team_conflict",
     "channel": "development",
-    "baseWeight": 20,
-    "cooldown": 120,
+    "prereq": {
+      "allOf": [
+        {
+          "stat": "time",
+          "greaterThan": 720
+        }
+      ]
+    },
     "text": [
-      "The staging server is down."
+      {
+        "actor": "gan",
+        "line": "Hey, can we talk about the new linter rules? I think they're a bit too strict."
+      },
+      {
+        "actor": "pete",
+        "line": "I disagree. I think they're helping us write better code."
+      },
+      {
+        "actor": "gan",
+        "line": "Well, it's slowing me down. I'm spending more time fixing linting errors than writing code."
+      }
     ],
     "choices": [
       {
-        "id": "investigate",
-        "label": "Investigate",
+        "id": "mediate_compromise",
+        "label": "Let's find a compromise that works for everyone.",
         "timeCost": 30,
         "outcomes": [
           {
-            "weight": 50,
+            "weight": 60,
             "messages": [
-              "You find the problem and restart the server."
+              "After a productive discussion, the team agrees to a more flexible set of linter rules."
+            ],
+            "apply": [
+              {
+                "stat": "morale",
+                "increment": 10
+              },
+              {
+                "npc": {
+                  "id": "gan",
+                  "mood": 10
+                }
+              },
+              {
+                "npc": {
+                  "id": "pete",
+                  "mood": 5
+                }
+              }
+            ]
+          },
+          {
+            "weight": 40,
+            "messages": [
+              "The discussion gets heated and no one is willing to compromise. The meeting ends without a resolution."
             ],
             "apply": [
               {
                 "stat": "stress",
                 "increment": 10
+              },
+              {
+                "npc": {
+                  "id": "gan",
+                  "mood": -10
+                }
+              },
+              {
+                "npc": {
+                  "id": "pete",
+                  "mood": -5
+                }
               }
             ]
-          },
+          }
+        ]
+      },
+      {
+        "id": "side_with_pete",
+        "label": "I agree with Pete. Let's stick with the current rules.",
+        "timeCost": 10,
+        "outcomes": [
           {
-            "weight": 50,
             "messages": [
-              "It was just a temporary glitch. The server is back online."
+              "Gan seems unhappy with the decision, but the discussion is over."
+            ],
+            "apply": [
+              {
+                "npc": {
+                  "id": "gan",
+                  "mood": -15
+                }
+              },
+              {
+                "npc": {
+                  "id": "pete",
+                  "mood": 10
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "continue_work",
+    "channel": "development",
+    "isFiller": true,
+    "baseWeight": 1,
+    "text": [
+      "Things are quiet. What's your next move?"
+    ],
+    "choices": [
+      {
+        "id": "check_emails",
+        "label": "Check emails and messages",
+        "timeCost": 15,
+        "outcomes": [
+          {
+            "messages": [
+              "You clear out your inbox. Nothing urgent."
             ],
             "apply": [
               {
                 "stat": "stress",
-                "increment": -5
+                "increment": -1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "review_docs",
+        "label": "Review project documentation",
+        "timeCost": 30,
+        "outcomes": [
+          {
+            "messages": [
+              "You spend some time reading the project docs. It's a lot to take in."
+            ],
+            "apply": [
+              {
+                "stat": "stress",
+                "increment": 1
               }
             ]
           }

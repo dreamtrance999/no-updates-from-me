@@ -2,9 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 
+import '../engine/actor.dart';
 import '../engine/choice.dart' as engine;
 import '../engine/decision_engine.dart';
 import '../engine/event.dart' as engine;
+import '../engine/event_line.dart';
 import '../engine/game_state.dart';
 import '../game_controller.dart';
 import '../repository/asset_event_repository.dart';
@@ -33,6 +35,12 @@ class GameScreenViewModel extends ChangeNotifier {
   bool _initialized = false;
   engine.Event? _activeEvent;
 
+  final Map<String, Actor> _actors = {
+    'olivia': const Actor(name: 'Olivia'),
+    'pete': const Actor(name: 'Pete'),
+    'gan': const Actor(name: 'Gan'),
+  };
+
   // ================= GETTERS (USED BY UI) =================
   bool get isInitialized => _initialized;
 
@@ -45,6 +53,8 @@ class GameScreenViewModel extends ChangeNotifier {
   int get morale => _engineController.state.morale;
 
   int get stress => _engineController.state.stress;
+
+  int get chaos => _engineController.state.chaos;
 
   List<GameChannelUiModel> get channels =>
       _channels.where((c) => c.kind != GameChannelKind.dm).toList();
@@ -111,7 +121,7 @@ class GameScreenViewModel extends ChangeNotifier {
       items.add(
         ChatMessageUiModel(
           id: _randId(),
-          name: '[SYSTEM]',
+          actor: Actor.system,
           message: msg,
           timeLabel: _clock.hhmm,
         ),
@@ -149,14 +159,32 @@ class GameScreenViewModel extends ChangeNotifier {
 
     _chatByChannel.putIfAbsent(channelId, () => []);
 
+    for (final line in e.text) {
+      _chatByChannel[channelId]!.add(
+        ChatMessageUiModel(
+          id: _randId(),
+          actor: _getActor(line.actorId),
+          message: line.line,
+          timeLabel: _clock.hhmm,
+        ),
+      );
+    }
+
     _chatByChannel[channelId]!.add(
       ChatDecisionUiModel(
         id: e.id,
-        prompt: e.text.join('\n'),
+        prompt: e.choices.isNotEmpty ? 'What do you do?' : '',
         isResolved: false,
         options: e.choices.map(_mapChoice).toList(),
       ),
     );
+  }
+
+  Actor _getActor(String? actorId) {
+    if (actorId == null) {
+      return Actor.system;
+    }
+    return _actors[actorId] ?? Actor.system;
   }
 
   DecisionOptionUiModel _mapChoice(engine.Choice c) {
