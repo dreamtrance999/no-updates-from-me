@@ -1,0 +1,90 @@
+[
+  {
+    "id": "dev_conflict",
+    "channel": "development",
+    "baseWeight": 10,
+    "cooldown": 60,
+    "text": [
+      "Two devs are arguing in chat."
+    ],
+    "choices": [
+      {
+        "id": "mediate",
+        "label": "Mediate",
+        "timeCost": 15,
+        "outcomes": [
+          {
+            "weight": 70,
+            "messages": [
+              "They calm down."
+            ],
+            "apply": [
+              {
+                "stat": "stress",
+                "increment": -5
+              }
+            ]
+          },
+          {
+            "weight": 30,
+            "messages": [
+              "They argue in DMs instead."
+            ],
+            "apply": [
+              {
+                "stat": "stress",
+                "increment": 5
+              },
+              {
+                "stat": "chaos",
+                "increment": 3
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "server_down",
+    "channel": "development",
+    "baseWeight": 20,
+    "cooldown": 120,
+    "text": [
+      "The staging server is down."
+    ],
+    "choices": [
+      {
+        "id": "investigate",
+        "label": "Investigate",
+        "timeCost": 30,
+        "outcomes": [
+          {
+            "weight": 50,
+            "messages": [
+              "You find the problem and restart the server."
+            ],
+            "apply": [
+              {
+                "stat": "stress",
+                "increment": 10
+              }
+            ]
+          },
+          {
+            "weight": 50,
+            "messages": [
+              "It was just a temporary glitch. The server is back online."
+            ],
+            "apply": [
+              {
+                "stat": "stress",
+                "increment": -5
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

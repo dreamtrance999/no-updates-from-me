@@ -2,39 +2,54 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:no_updates_from_me/game_screen.dart';
+import 'package:no_updates_from_me/screen/game_screen.dart';
+import 'package:no_updates_from_me/screen/game_screen_view_model.dart';
+import 'package:provider/provider.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-  runApp(const MyApp());
+
+  final vm = GameScreenViewModel();
+  await vm.init();
+
+  runApp(MyApp(vm: vm));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final GameScreenViewModel vm;
+
+  const MyApp({super.key, required this.vm});
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(490, 844),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            scaffoldBackgroundColor: const Color(0xFFE0D8C0),
-            textTheme: const TextTheme(
-              bodyMedium: TextStyle(
-                  color: Color(0xFF3A3A3A), fontFamily: 'PressStart2P'),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<GameScreenViewModel>.value(value: vm),
+      ],
+      child: ScreenUtilInit(
+        designSize: const Size(490, 844),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              fontFamily: 'PixelifySans',
+              scaffoldBackgroundColor: const Color(0xFF141414),
+              textTheme: const TextTheme(
+                bodyMedium: TextStyle(
+                  color: Color(0xFFEAEAEA),
+                ),
+              ),
             ),
-          ),
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          home: child,
-        );
-      },
-      child: const GameScreen(),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: child,
+          );
+        },
+        child: const GameScreen(),
+      ),
     );
   }
 }
