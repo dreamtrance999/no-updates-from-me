@@ -9,14 +9,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter
-  intl: 0.18.1
+  # REMOVED flutter_localizations and intl
   cupertino_icons: ^1.0.6
   provider: ^6.1.2
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   flutter_screenutil: ^5.9.0
+  collection: ^1.18.0
 
 dev_dependencies:
   flutter_test:
@@ -25,7 +24,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  generate: true
+  # generate: true # REMOVED
   assets:
     - assets/images/
     - assets/events/

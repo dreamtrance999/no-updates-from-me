@@ -1,0 +1,541 @@
+[
+  {
+    "id": "fallback_event",
+    "text": "The daily stand-up meeting drones on, achieving nothing.",
+    "tags": ["operational"],
+    "baseWeight": 1.0,
+    "cooldownTurns": 0,
+    "effects": {
+      "comply": { "fatigue": 2 },
+      "deflect": { "stress": -2 },
+      "escalate": { "teamCohesion": -2 },
+      "align": { "teamCohesion": 1 },
+      "withdraw": { "fatigue": -2 }
+    }
+  },
+  {
+    "id": "op_build_broken",
+    "text": "The main branch build is broken. Production deployments are blocked.",
+    "tags": ["operational"],
+    "baseWeight": 1.0,
+    "priority": 1.5,
+    "effects": {
+      "comply": { "stress": 10, "fatigue": 5, "momentum": 5 },
+      "deflect": { "stress": -5, "suspicion": 5, "teamCohesion": -5 },
+      "escalate": { "personalRisk": 10, "momentum": 10 },
+      "align": { "teamCohesion": 10, "fatigue": 5 },
+      "withdraw": { "stress": -10, "personalRisk": -5, "momentum": -10 }
+    }
+  },
+  {
+    "id": "op_staging_slow",
+    "text": "The staging environment is running so slowly it's unusable.",
+    "tags": ["operational"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "fatigue": 10, "momentum": 2 },
+      "deflect": { "stress": -5, "teamCohesion": -3 },
+      "escalate": { "stress": 5, "suspicion": 5 },
+      "align": { "teamCohesion": 5 },
+      "withdraw": { "stress": -5, "momentum": -5 }
+    }
+  },
+  {
+    "id": "op_critical_bug",
+    "text": "A critical bug is reported by a high-value client.",
+    "tags": ["operational"],
+    "baseWeight": 1.0,
+    "priority": 2.0,
+    "effects": {
+      "comply": { "stress": 15, "momentum": 10, "fatigue": 5 },
+      "deflect": { "institutionalTrust": -10, "suspicion": 5 },
+      "escalate": { "personalRisk": 15, "momentum": 5 },
+      "align": { "teamCohesion": 10, "stress": 5 },
+      "withdraw": { "personalRisk": -10, "momentum": -10 }
+    }
+  },
+  {
+    "id": "op_dependency_outdated",
+    "text": "A core dependency has a critical security vulnerability and must be updated.",
+    "tags": ["operational"],
+    "baseWeight": 0.8,
+    "effects": {
+      "comply": { "fatigue": 10, "personalRisk": 5 },
+      "deflect": { "suspicion": 5, "personalRisk": -5 },
+      "escalate": { "momentum": 5, "stress": 5 },
+      "align": { "teamCohesion": 5 },
+      "withdraw": { "stress": -5, "momentum": -5 }
+    }
+  },
+  {
+    "id": "op_flaky_tests",
+    "text": "Flaky tests are wasting hours of developer time.",
+    "tags": ["operational"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "fatigue": 5, "teamCohesion": 5 },
+      "deflect": { "stress": -5, "momentum": -5 },
+      "escalate": { "stress": 5, "suspicion": 5 },
+      "align": { "teamCohesion": 10 },
+      "withdraw": { "fatigue": -5, "teamCohesion": -5 }
+    }
+  },
+  {
+    "id": "op_requirements_change",
+    "text": "A stakeholder demands a last-minute change to the requirements.",
+    "tags": ["operational"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "stress": 10, "fatigue": 5 },
+      "deflect": { "institutionalTrust": -5, "stress": -5 },
+      "escalate": { "personalRisk": 10, "suspicion": 5 },
+      "align": { "teamCohesion": 5, "institutionalTrust": 5 },
+      "withdraw": { "momentum": -10, "stress": -5 }
+    }
+  },
+  {
+    "id": "op_data_migration",
+    "text": "A complex data migration needs to be performed this weekend.",
+    "tags": ["operational"],
+    "baseWeight": 0.7,
+    "effects": {
+      "comply": { "fatigue": 15, "stress": 5 },
+      "deflect": { "suspicion": 10, "personalRisk": -5 },
+      "escalate": { "personalRisk": 10, "stress": 10 },
+      "align": { "teamCohesion": 10, "fatigue": 5 },
+      "withdraw": { "stress": -10, "momentum": -5 }
+    }
+  },
+  {
+    "id": "op_oncall_alert",
+    "text": "An on-call alert fires at 3 AM. It's your rotation.",
+    "tags": ["operational"],
+    "baseWeight": 0.8,
+    "effects": {
+      "comply": { "fatigue": 20, "stress": 10 },
+      "deflect": { "teamCohesion": -10, "suspicion": 5 },
+      "escalate": { "personalRisk": 5, "stress": 5 },
+      "align": { "teamCohesion": -5, "fatigue": 5 },
+      "withdraw": { "stress": -10, "teamCohesion": -5 }
+    }
+  },
+  {
+    "id": "op_tooling_broken",
+    "text": "Internal tooling is broken, preventing you from testing your feature.",
+    "tags": ["operational"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "fatigue": 10 },
+      "deflect": { "stress": -5 },
+      "escalate": { "suspicion": 5 },
+      "align": { "teamCohesion": 5 },
+      "withdraw": { "momentum": -5 }
+    }
+  },
+  {
+    "id": "op_design_feedback",
+    "text": "The design team provides a mountain of feedback that requires a rewrite.",
+    "tags": ["operational"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "fatigue": 10, "stress": 5 },
+      "deflect": { "teamCohesion": -5, "stress": -5 },
+      "escalate": { "suspicion": 5, "personalRisk": 5 },
+      "align": { "institutionalTrust": 5 },
+      "withdraw": { "momentum": -10 }
+    }
+  },
+  {
+    "id": "inst_reorg_rumor",
+    "text": "A rumor of a major re-organization is spreading.",
+    "tags": ["institutional"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "suspicion": 5 },
+      "deflect": { "stress": -5 },
+      "escalate": { "personalRisk": 5, "suspicion": 10 },
+      "align": { "teamCohesion": 5 },
+      "withdraw": { "institutionalTrust": -5 }
+    }
+  },
+  {
+    "id": "inst_mandatory_training",
+    "text": "You are assigned mandatory training on a topic you already know.",
+    "tags": ["institutional"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "fatigue": 5, "institutionalTrust": 2 },
+      "deflect": { "suspicion": 5, "institutionalTrust": -5 },
+      "escalate": { "personalRisk": 5 },
+      "align": { "teamCohesion": 1 },
+      "withdraw": { "stress": -2 }
+    }
+  },
+  {
+    "id": "inst_self_review",
+    "text": "HR wants you to complete your annual self-review by EOD.",
+    "tags": ["institutional"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "institutionalTrust": 5, "fatigue": 5 },
+      "deflect": { "institutionalTrust": -5, "suspicion": 5 },
+      "escalate": { "personalRisk": 5, "suspicion": 10, "institutionalTrust": -10 },
+      "align": { "institutionalTrust": 2, "teamCohesion": 2 },
+      "withdraw": { "stress": -5, "fatigue": -5, "institutionalTrust": -2 }
+    }
+  },
+  {
+    "id": "inst_new_policy",
+    "text": "A new, inconvenient company-wide policy is announced.",
+    "tags": ["institutional"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "institutionalTrust": -5, "fatigue": 5 },
+      "deflect": { "stress": -5, "suspicion": 5 },
+      "escalate": { "personalRisk": 10, "institutionalTrust": -10 },
+      "align": { "teamCohesion": 5 },
+      "withdraw": { "institutionalTrust": -5, "stress": -5 }
+    }
+  },
+  {
+    "id": "inst_budget_cuts",
+    "text": "Management announces budget cuts; your project's future is uncertain.",
+    "tags": ["institutional"],
+    "baseWeight": 0.8,
+    "priority": 1.8,
+    "effects": {
+      "comply": { "stress": 10, "institutionalTrust": -10 },
+      "deflect": { "stress": -5, "suspicion": 5 },
+      "escalate": { "personalRisk": 15, "momentum": -10 },
+      "align": { "teamCohesion": 10, "stress": 5 },
+      "withdraw": { "personalRisk": -10, "momentum": -15 }
+    }
+  },
+  {
+    "id": "inst_all_hands",
+    "text": "A last-minute, mandatory all-hands meeting is called.",
+    "tags": ["institutional"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "fatigue": 5 },
+      "deflect": { "suspicion": 5, "personalRisk": 5 },
+      "escalate": { "stress": 5, "suspicion": 5 },
+      "align": { "teamCohesion": 2 },
+      "withdraw": { "stress": -5, "fatigue": -5 }
+    }
+  },
+  {
+    "id": "inst_strategy_shift",
+    "text": "Leadership announces a major strategic shift that invalidates your current work.",
+    "tags": ["institutional"],
+    "baseWeight": 0.6,
+    "priority": 2.0,
+    "effects": {
+      "comply": { "stress": 15, "momentum": -20, "institutionalTrust": 5 },
+      "deflect": { "suspicion": 10, "institutionalTrust": -10 },
+      "escalate": { "personalRisk": 20, "institutionalTrust": -15 },
+      "align": { "teamCohesion": 10, "stress": 10 },
+      "withdraw": { "stress": -10, "momentum": -10, "personalRisk": -10 }
+    }
+  },
+  {
+    "id": "inst_tech_talk",
+    "text": "You are asked to give a presentation on your work to the entire department.",
+    "tags": ["institutional"],
+    "baseWeight": 0.9,
+    "effects": {
+      "comply": { "personalRisk": 5, "fatigue": 5, "institutionalTrust": 5 },
+      "deflect": { "suspicion": 5, "personalRisk": -5 },
+      "escalate": { "momentum": 10, "personalRisk": 10 },
+      "align": { "teamCohesion": 5 },
+      "withdraw": { "stress": -5, "institutionalTrust": -5 }
+    }
+  },
+  {
+    "id": "inst_hiring_committee",
+    "text": "You've been 'volunteered' for a hiring committee, which means hours of interviews.",
+    "tags": ["institutional"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "fatigue": 15, "institutionalTrust": 5 },
+      "deflect": { "suspicion": 5, "institutionalTrust": -5 },
+      "escalate": { "personalRisk": 5 },
+      "align": { "teamCohesion": -2 },
+      "withdraw": { "stress": -5, "fatigue": -5 }
+    }
+  },
+  {
+    "id": "inst_expense_report",
+    "text": "Your expense report was rejected for a trivial reason.",
+    "tags": ["institutional"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "fatigue": 5, "stress": 5, "institutionalTrust": -2 },
+      "deflect": { "stress": -5, "suspicion": 2 },
+      "escalate": { "personalRisk": 5, "institutionalTrust": -5 },
+      "align": { "teamCohesion": 2 },
+      "withdraw": { "stress": -5 }
+    }
+  },
+  {
+    "id": "social_help_coworker",
+    "text": "A coworker asks for help with a difficult task.",
+    "tags": ["social"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "teamCohesion": 10, "fatigue": 5 },
+      "deflect": { "teamCohesion": -5, "stress": -5 },
+      "escalate": { "teamCohesion": -10, "personalRisk": 5 },
+      "align": { "teamCohesion": 15 },
+      "withdraw": { "teamCohesion": -10, "stress": -5 }
+    }
+  },
+  {
+    "id": "social_team_lunch",
+    "text": "The team decides to go out for a long lunch.",
+    "tags": ["social"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "teamCohesion": 10, "fatigue": 5, "momentum": -5 },
+      "deflect": { "teamCohesion": -5, "suspicion": 5 },
+      "escalate": { "stress": 5 },
+      "align": { "teamCohesion": 15, "stress": -5 },
+      "withdraw": { "teamCohesion": -10, "stress": -5, "fatigue": -5 }
+    }
+  },
+  {
+    "id": "social_disagreement",
+    "text": "Two of your teammates are having a loud, disruptive disagreement.",
+    "tags": ["social"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "stress": 5, "teamCohesion": -10 },
+      "deflect": { "stress": -5 },
+      "escalate": { "personalRisk": 10, "teamCohesion": -15 },
+      "align": { "teamCohesion": 5, "stress": 5, "fatigue": 5 },
+      "withdraw": { "teamCohesion": -5, "stress": -5 }
+    }
+  },
+  {
+    "id": "social_credit_stolen",
+    "text": "Someone else takes credit for your work in a team meeting.",
+    "tags": ["social"],
+    "baseWeight": 0.8,
+    "effects": {
+      "comply": { "stress": 10, "teamCohesion": -10, "institutionalTrust": -5 },
+      "deflect": { "stress": -5, "suspicion": 5 },
+      "escalate": { "personalRisk": 15, "suspicion": 10, "teamCohesion": -5 },
+      "align": { "teamCohesion": 5, "stress": 5 },
+      "withdraw": { "stress": -10, "momentum": -5 }
+    }
+  },
+  {
+    "id": "social_gossip",
+    "text": "A coworker tries to pull you into some juicy office gossip.",
+    "tags": ["social"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "teamCohesion": 5, "suspicion": 5 },
+      "deflect": { "teamCohesion": -5 },
+      "escalate": { "personalRisk": 5, "suspicion": 10 },
+      "align": { "teamCohesion": 10 },
+      "withdraw": { "stress": -5, "suspicion": -5 }
+    }
+  },
+  {
+    "id": "social_manager_skip",
+    "text": "Your manager's manager asks for your opinion on the project, bypassing your boss.",
+    "tags": ["social"],
+    "baseWeight": 0.7,
+    "effects": {
+      "comply": { "personalRisk": 10, "institutionalTrust": 5, "suspicion": 5 },
+      "deflect": { "stress": -5, "institutionalTrust": -5 },
+      "escalate": { "personalRisk": 15, "suspicion": 10 },
+      "align": { "teamCohesion": -5, "suspicion": 5 },
+      "withdraw": { "personalRisk": -10, "stress": -5 }
+    }
+  },
+  {
+    "id": "social_after_work",
+    "text": "The team is heading out for drinks after work, and you're invited.",
+    "tags": ["social"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "teamCohesion": 10, "fatigue": 10, "stress": -5 },
+      "deflect": { "teamCohesion": -5 },
+      "escalate": { "personalRisk": 5, "stress": 5 },
+      "align": { "teamCohesion": 15, "stress": -5 },
+      "withdraw": { "fatigue": -10, "stress": -5 }
+    }
+  },
+  {
+    "id": "social_new_hire",
+    "text": "A new hire joins the team and needs to be brought up to speed.",
+    "tags": ["social"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "fatigue": 10, "teamCohesion": 5, "momentum": -5 },
+      "deflect": { "teamCohesion": -5, "suspicion": 5 },
+      "escalate": { "personalRisk": 5 },
+      "align": { "teamCohesion": 15 },
+      "withdraw": { "fatigue": -5 }
+    }
+  },
+  {
+    "id": "social_code_review",
+    "text": "You receive a code review that feels unnecessarily harsh and personal.",
+    "tags": ["social"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "stress": 10, "teamCohesion": -5, "fatigue": 5 },
+      "deflect": { "stress": -5, "suspicion": 5 },
+      "escalate": { "personalRisk": 10, "teamCohesion": -10 },
+      "align": { "teamCohesion": 5 },
+      "withdraw": { "stress": -10, "momentum": -5 }
+    }
+  },
+  {
+    "id": "social_pair_programming",
+    "text": "A teammate asks if you want to pair program on a feature.",
+    "tags": ["social"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "teamCohesion": 10, "momentum": 5, "fatigue": 10 },
+      "deflect": { "teamCohesion": -5 },
+      "escalate": { "momentum": 10 },
+      "align": { "teamCohesion": 15 },
+      "withdraw": { "fatigue": -5 }
+    }
+  },
+  {
+    "id": "personal_imposter_syndrome",
+    "text": "You're assigned a task you feel completely unqualified for.",
+    "tags": ["personal"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "stress": 15, "fatigue": 5 },
+      "deflect": { "stress": -5, "suspicion": 5 },
+      "escalate": { "personalRisk": 10, "momentum": 5 },
+      "align": { "teamCohesion": 10, "stress": -5 },
+      "withdraw": { "stress": -10, "personalRisk": -5 }
+    }
+  },
+  {
+    "id": "personal_flow_state",
+    "text": "You're in a state of deep focus, and the work is flowing effortlessly.",
+    "tags": ["personal"],
+    "baseWeight": 0.5,
+    "effects": {
+      "comply": { "momentum": 15, "stress": -10, "fatigue": 5 },
+      "deflect": { "teamCohesion": -5 },
+      "escalate": { "momentum": 20 },
+      "align": { "momentum": 10 },
+      "withdraw": { "stress": -15, "fatigue": -10 }
+    }
+  },
+  {
+    "id": "personal_senior_leader_msg",
+    "text": "You receive an unsolicited, cryptic message from a senior leader.",
+    "tags": ["personal"],
+    "baseWeight": 0.8,
+    "effects": {
+      "comply": { "stress": 5, "suspicion": 5, "personalRisk": 5 },
+      "deflect": { "stress": -5, "personalRisk": -5 },
+      "escalate": { "personalRisk": 10, "suspicion": 10 },
+      "align": { "teamCohesion": 5, "suspicion": 5 },
+      "withdraw": { "stress": -10, "suspicion": -5 }
+    }
+  },
+  {
+    "id": "personal_headhunter",
+    "text": "A headhunter reaches out with a very tempting job offer.",
+    "tags": ["personal"],
+    "baseWeight": 0.7,
+    "effects": {
+      "comply": { "institutionalTrust": -10, "stress": -5 },
+      "deflect": { "stress": -5, "suspicion": 5 },
+      "escalate": { "personalRisk": 10, "institutionalTrust": -15 },
+      "align": { "teamCohesion": 5 },
+      "withdraw": { "stress": -10 }
+    }
+  },
+  {
+    "id": "personal_distraction",
+    "text": "You find yourself endlessly scrolling through social media instead of working.",
+    "tags": ["personal"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "momentum": -10, "fatigue": 5 },
+      "deflect": { "stress": -5, "momentum": -5 },
+      "escalate": { "stress": 5 },
+      "align": { "teamCohesion": 5 },
+      "withdraw": { "fatigue": -5, "stress": -10 }
+    }
+  },
+  {
+    "id": "personal_performance_review",
+    "text": "Your performance review is coming up.",
+    "tags": ["personal"],
+    "baseWeight": 0.9,
+    "effects": {
+      "comply": { "stress": 10, "fatigue": 5 },
+      "deflect": { "stress": -5 },
+      "escalate": { "personalRisk": 10, "momentum": 5 },
+      "align": { "institutionalTrust": 5 },
+      "withdraw": { "stress": -5, "personalRisk": -5 }
+    }
+  },
+  {
+    "id": "personal_vacation",
+    "text": "You return from a vacation feeling refreshed, but there's a mountain of emails.",
+    "tags": ["personal"],
+    "baseWeight": 0.6,
+    "effects": {
+      "comply": { "stress": 10, "fatigue": -15 },
+      "deflect": { "momentum": -5 },
+      "escalate": { "stress": 5, "momentum": 5 },
+      "align": { "teamCohesion": 5 },
+      "withdraw": { "stress": -10, "fatigue": -10 }
+    }
+  },
+  {
+    "id": "personal_boring_work",
+    "text": "The work has become monotonous and uninspiring.",
+    "tags": ["personal"],
+    "baseWeight": 1.0,
+    "effects": {
+      "comply": { "fatigue": 10, "momentum": -5 },
+      "deflect": { "stress": -5 },
+      "escalate": { "personalRisk": 5, "stress": 5 },
+      "align": { "teamCohesion": 5 },
+      "withdraw": { "momentum": -10, "stress": -5 }
+    }
+  },
+  {
+    "id": "personal_family_emergency",
+    "text": "A family emergency requires your immediate attention.",
+    "tags": ["personal"],
+    "baseWeight": 0.5,
+    "priority": 2.0,
+    "effects": {
+      "comply": { "stress": 20, "fatigue": 10, "momentum": -10 },
+      "deflect": { "institutionalTrust": -10, "suspicion": 10 },
+      "escalate": { "personalRisk": 10, "institutionalTrust": -5 },
+      "align": { "teamCohesion": 10, "stress": -5 },
+      "withdraw": { "fatigue": -10, "stress": -10, "momentum": -15 }
+    }
+  },
+  {
+    "id": "personal_inspiration",
+    "text": "You have a sudden insight that could solve a major problem.",
+    "tags": ["personal"],
+    "baseWeight": 0.6,
+    "effects": {
+      "comply": { "momentum": 10, "fatigue": 5 },
+      "deflect": { "stress": -5 },
+      "escalate": { "momentum": 15, "personalRisk": 5 },
+      "align": { "teamCohesion": 10, "momentum": 5 },
+      "withdraw": { "stress": -10 }
+    }
+  }
+]

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:no_updates_from_me/screen/game_screen.dart';
 import 'package:no_updates_from_me/screen/game_screen_view_model.dart';
+import 'package:no_updates_from_me/screen/main_menu_screen.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -43,12 +42,11 @@ class MyApp extends StatelessWidget {
                 ),
               ),
             ),
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
+            // REMOVED localizationsDelegates and supportedLocales
             home: child,
           );
         },
-        child: const GameScreen(),
+        child: const MainMenuScreen(),
       ),
     );
   }
